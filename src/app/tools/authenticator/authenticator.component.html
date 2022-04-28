@@ -9,10 +9,16 @@
         <button mat-flat-button color="primary">Login</button>
       </div>
       <div *ngIf="isRegisterState()">
-        <input placeholder="Email">
-        <input placeholder="Password" type="password">
-        <input placeholder="Confirm Password" type="password">
-        <button mat-flat-button color="warn">Create</button>
+        <input #registerEmail placeholder="Email">
+        <input #registerPassword placeholder="Password" type="password">
+        <input #registerConfirmPassword placeholder="Confirm Password" type="password">
+        <button
+          (click)= "onRegisterClick(
+            registerEmail,
+            registerPassword,
+            registerConfirmPassword
+          )"
+        mat-flat-button color="warn">Create</button>
       </div>
       <div *ngIf="isForgotPasswordState()">
         <input placeholder="Email">
