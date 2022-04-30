@@ -17,6 +17,47 @@ export class AuthenticatorComponent implements OnInit {
 
   }
 
+  onResetClick(resetEmail: HTMLInputElement)
+  {
+    let email = resetEmail.value;
+    if(this.isNotEmpty(email))
+    {
+      this.firebasetsAuth.sendPasswordResetEmail(
+        {
+          email: email,
+          onComplete: (err) =>{
+            alert(`Reset email sent to ${email}`);
+          }
+        }
+      );
+    }
+  }
+
+  onLogin(
+    loginEmail: HTMLInputElement,
+    loginPassword: HTMLInputElement
+  )
+  {
+    let email = loginEmail.value;
+    let password = loginPassword.value;
+
+    if(this.isNotEmpty(email) && this.isNotEmpty(password))
+    {
+      this.firebasetsAuth.signInWith(
+        {
+          email: email,
+          password: password,
+          onComplete: (uc) => {
+            alert("Logged in");
+          },
+          onFail: (err) => {
+            alert(err);
+          }
+        }
+      );
+    }
+  }
+
   onRegisterClick(
     registerEmail: HTMLInputElement,
     registerPassword: HTMLInputElement,
