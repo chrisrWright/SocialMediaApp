@@ -31,7 +31,7 @@ export class AppComponent {
               this.router.navigate(["emailVerification"]);
             },
             whenSignedInAndEmailVerified: user => {
-
+                
             },
             whenChanged: user => {
 
