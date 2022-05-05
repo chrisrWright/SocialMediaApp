@@ -10,7 +10,7 @@ import { AuthenticatorComponent } from 'src/app/tools/authenticator/authenticato
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  @Input() show: boolean =false;
+  @Input() show: boolean = false;
 
   firestore: FirebaseTSFirestore;
   auth: FirebaseTSAuth;
@@ -29,12 +29,17 @@ export class ProfileComponent implements OnInit {
     descriptionInput: HTMLTextAreaElement
   )
   {
+    if(this.auth.getAuth().currentUser == null){
+      return;
+    }
+    else
+    {
     let name = nameInput.value;
     let description = descriptionInput.value;
 
     this.firestore.create(
       {
-        path: ["Users", this.auth.getAuth().currentUser.uid],
+        path: ["Users", this.auth.getAuth().currentUser!.uid],
         data:
         {
           publicName: name,
@@ -47,9 +52,12 @@ export class ProfileComponent implements OnInit {
         },
         onFail: (err) => {
 
-        }
+         }
       }
+
+
     );
+  }
 
   }
 }
