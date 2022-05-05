@@ -35,11 +35,10 @@ export class AppComponent {
               this.router.navigate(["emailVerification"]);
             },
             whenSignedInAndEmailVerified: user => {
-<<<<<<< HEAD
-          //    this.getUserProfile();
-=======
 
->>>>>>> parent of 660daba (Profile feature)
+          //    this.getUserProfile();
+
+
             },
             whenChanged: user => {
 
