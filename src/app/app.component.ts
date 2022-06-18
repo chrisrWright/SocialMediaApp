@@ -36,8 +36,8 @@ export class AppComponent {
             },
             whenSignedInAndEmailVerified: user => {
 
-          //    this.getUserProfile();
-
+            // this.getUserProfile();
+            this.router.navigate(["postfeed"]);
 
             },
             whenChanged: user => {
@@ -60,6 +60,10 @@ export class AppComponent {
   //         this.userDocument = <UserDocument>result.data();
   //
   //         this.userHasProfile = result.exists;
+  //         if(this.userHasProfile)
+  //         {
+  //           this.router.navigate(["postfeed"]);
+  //         }
   //
   //       }
   //     }
