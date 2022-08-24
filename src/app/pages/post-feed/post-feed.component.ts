@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
 import { CreatePostComponent } from 'src/app/tools/create-post/create-post.component';
-import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
+import { FirebaseTSFirestore, Limit, OrderBy, Where } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 
 @Component({
   selector: 'app-post-feed',
@@ -23,19 +23,22 @@ export class PostFeedComponent implements OnInit {
 
   }
 
+
+
   getPosts(){
     this.firestore.getCollection(
       {
         path: ["Posts"],
         where: [
-          //new Where("creatorId", "==", "Ofo3zi31RYbC53qjMxrZO44mbgf2"),
-          //new OrderBy("timestamp", "desc"),
-        //  new Limit(10)
+
+          new OrderBy("timestamp", "desc"),
+         new Limit(10)
         ],
         onComplete: (result) => {
           result.docs.forEach(
             doc => {
               let post = <PostData>doc.data();
+              post.postId = doc.id;
               this.posts.push(post);
             }
           );
@@ -53,4 +56,5 @@ export interface PostData {
   comment: string;
   creatorId: string;
   imageUrl?: string;
+  postId: string;
 }

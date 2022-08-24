@@ -15,7 +15,7 @@ export class AppComponent {
   auth = new FirebaseTSAuth();
   firestore = new FirebaseTSFirestore();
   userHasProfile = true;
-  userDocument!: UserDocument;
+  private static userDocument: UserDocument;
 
   constructor(private loginSheet : MatBottomSheet,
     private router: Router)
@@ -29,14 +29,14 @@ export class AppComponent {
 
             },
             whenSignedOut: user => {
-
+              //AppComponent.userDocument = null;
             },
             whenSignedInAndEmailNotVerified: user => {
               this.router.navigate(["emailVerification"]);
             },
             whenSignedInAndEmailVerified: user => {
 
-            // this.getUserProfile();
+            this.getUserProfile();
             this.router.navigate(["postfeed"]);
 
             },
@@ -49,26 +49,40 @@ export class AppComponent {
       }
     );
   }
+  public static getUserDocument()
+  {
+    return AppComponent.userDocument;
+  }
 
-  // getUserProfile()
-  // {
-  //   this.firestore.listenToDocument(
-  //     {
-  //       name: "",
-  //       path: ["Users", this.auth.getAuth().currentUser!.uid],
-  //       onUpdate: (result) => {
-  //         this.userDocument = <UserDocument>result.data();
-  //
-  //         this.userHasProfile = result.exists;
-  //         if(this.userHasProfile)
-  //         {
-  //           this.router.navigate(["postfeed"]);
-  //         }
-  //
-  //       }
-  //     }
-  //   );
-  // }
+  getUsername()
+  {
+    try{
+      return AppComponent.userDocument.publicName;
+    } catch (err) {
+        return;
+    }
+  }
+
+  getUserProfile()
+  {
+    this.firestore.listenToDocument(
+      {
+        name: "",
+        path: ["Users", this.auth.getAuth().currentUser!.uid],
+        onUpdate: (result) => {
+          AppComponent.userDocument = <UserDocument>result.data();
+
+          this.userHasProfile = result.exists;
+          AppComponent.userDocument.userId = this.auth.getAuth().currentUser!.uid;
+          if(this.userHasProfile)
+          {
+            this.router.navigate(["postfeed"]);
+          }
+
+        }
+      }
+    );
+  }
 
   onLogoutClick()
   {
@@ -90,4 +104,5 @@ export class AppComponent {
 export interface UserDocument {
   publicName: string;
   description: string;
+  userId: string;
 }
