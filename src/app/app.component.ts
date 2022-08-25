@@ -36,6 +36,7 @@ export class AppComponent {
             },
             whenSignedInAndEmailVerified: user => {
 
+          
             this.getUserProfile();
             this.router.navigate(["postfeed"]);
 
