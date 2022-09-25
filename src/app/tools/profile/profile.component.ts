@@ -49,6 +49,7 @@ export class ProfileComponent implements OnInit {
         onFail: (err) => {
 
          }
+         
       }
 
 
