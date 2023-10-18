@@ -8,6 +8,7 @@ Account Creation and Verification
 
 Seamlessly create new accounts and verify them for full access to the platform.
 Streamlined password reset process for enhanced security.
+
 Post Management
 
 Effortlessly create, edit, and delete posts to share thoughts, images, and more with the community.
